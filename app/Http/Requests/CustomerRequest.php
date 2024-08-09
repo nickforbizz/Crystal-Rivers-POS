@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class CustomerRequest extends FormRequest
 {
@@ -32,13 +33,18 @@ class CustomerRequest extends FormRequest
      */
     public function rules(): array
     {
+        $customerId = $this->route('customer');
         return [
             'fk_user' => 'required',
             'client_ID' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
             'names' => 'nullable',
-            'email' => 'required|min:2|unique:customers,email',
+            'email' => [
+                'required',
+                'min:2',
+                Rule::unique('customers', 'email')->ignore($customerId), // Ignore the email if it's unchanged
+            ],
             'phone' => 'nullable',
             'address' => 'nullable',
             'active' => 'nullable',
