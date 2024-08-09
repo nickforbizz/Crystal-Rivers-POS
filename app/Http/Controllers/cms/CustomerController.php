@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\cms;
 
+use App\Events\CustomerCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Http\Requests\CustomerRequest;
@@ -71,8 +72,12 @@ class CustomerController extends Controller
     public function store(CustomerRequest $request)
     {
         // dd($request->validated());
-        Customer::create($request->validated());
-        return redirect()->back()->with('success', 'Record Created Successfully');
+        $customer = Customer::create($request->all());
+        if ($customer) {
+            return redirect()->back()->with('success', 'Record Created Successfully');
+        }
+        return redirect()->back()->with('error', 'Error while creating record');
+        
     }
 
     /**
