@@ -2,6 +2,7 @@
 
 use App\Events\UserRegistered;
 use App\Http\Controllers\cms\AssignRoleController;
+use App\Http\Controllers\cms\CustomerController;
 use App\Http\Controllers\cms\NotificationController;
 use App\Http\Controllers\cms\PermissionController;
 use App\Http\Controllers\cms\UserController;
@@ -92,6 +93,7 @@ Route::middleware('cms')->group(function () {
         'posts' => PostController::class,
         'postCategories' => PostCategoryController::class,
         'products' => ProductController::class,
+        'customers' => CustomerController::class,
         'productCategories' => ProductCategoryController::class,
         'roles' => RoleController::class,
         'permissions' => PermissionController::class,

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\cms;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
-use App\Http\Request\CustomerRequest;
+use App\Http\Requests\CustomerRequest;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use DataTables;
 
 class CustomerController extends Controller
@@ -17,7 +17,9 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $data = Cache::remember('productcategory_all', 60, function () {
-            return Customer::orderBy('created_at', 'desc')->get();
+            return Customer::select('client_ID', 'names', 'email', 'phone', 'address', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
         });
         if ($request->ajax()) {
             return Datatables::of($data)
@@ -68,6 +70,7 @@ class CustomerController extends Controller
      */
     public function store(CustomerRequest $request)
     {
+        // dd($request->validated());
         Customer::create($request->validated());
         return redirect()->back()->with('success', 'Record Created Successfully');
     }

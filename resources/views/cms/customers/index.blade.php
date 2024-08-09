@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-inner">
     <div class="page-header">
-        <h4 class="page-title"> Product Categories </h4>
+        <h4 class="page-title"> Customers </h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
                 <a href="#">
@@ -14,7 +14,7 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a href="#"> Product Categories</a>
+                <a href="#"> Customers</a>
             </li>
             <li class="separator">
                 <i class="flaticon-right-arrow"></i>
@@ -32,8 +32,8 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">List of Available Record(s)</h4>
-                        @can('create product category')
-                        <a href="{{ route('productCategories.create') }}" class="btn btn-primary btn-round ml-auto" >
+                        @can('create customer')
+                        <a href="{{ route('customers.create') }}" class="btn btn-primary btn-round ml-auto" >
                             <i class="flaticon-add mr-2"></i>
                             Add Record
                         </a> 
@@ -45,13 +45,15 @@
 
                     <div class="table-responsive">
                         @include('cms.helpers.partials.feedback')
-                        <table id="tb_productCategories" class="display table table-striped table-hover">
+                        <table id="tb_customers" class="display table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Created By</th>
+                                    <th>Client ID</th>
+                                    <th>Names</th>
+                                    <th>Email</th>
+                                    <th>Phone </th>
+                                    <th>Address </th>
                                     <th>Created At</th>
                                     <th>Action</th>
                                 </tr>
@@ -73,23 +75,29 @@
 
 <script>
     $(document).ready(function() {
-        $('#tb_productCategories').DataTable({
+        $('#tb_customers').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('productCategories.index') }}",
+            ajax: "{{ route('customers.index') }}",
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
                 },
                 {
-                    data: 'name'
+                    data: 'client_ID'
                 },
                 {
-                    data: 'description'
+                    data: 'names'
                 },
                 {
-                    data: 'created_by'
-                },					
+                    data: 'email'
+                },
+                {
+                    data: 'phone'
+                },
+                {
+                    data: 'address'
+                },
                 {
                     data: 'created_at',
                 },
@@ -101,7 +109,7 @@
                 },
             ]
         });
-        // #tb_productCategories
+        // #tb_customers
 
        
     });
