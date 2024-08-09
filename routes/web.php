@@ -2,6 +2,7 @@
 
 use App\Events\UserRegistered;
 use App\Http\Controllers\cms\AssignRoleController;
+use App\Http\Controllers\cms\CustomerController;
 use App\Http\Controllers\cms\NotificationController;
 use App\Http\Controllers\cms\PermissionController;
 use App\Http\Controllers\cms\UserController;
@@ -53,7 +54,7 @@ Route::get('/optimize', function () {
 
 Route::get('/flush-perms', function () {
     Artisan::call('permission:cache-reset');
-    // return what you want
+    return "Flushing Complete";
 });
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
@@ -92,6 +93,7 @@ Route::middleware('cms')->group(function () {
         'posts' => PostController::class,
         'postCategories' => PostCategoryController::class,
         'products' => ProductController::class,
+        'customers' => CustomerController::class,
         'productCategories' => ProductCategoryController::class,
         'roles' => RoleController::class,
         'permissions' => PermissionController::class,
@@ -101,10 +103,10 @@ Route::middleware('cms')->group(function () {
     ]);
 
     // CART Routes
-    Route::get('cart', [ProductsController::class, 'cart'])->name('cart');
-    Route::get('add-to-cart/{id}', [ProductsController::class, 'addToCart'])->name('addToCart');
-    Route::patch('update-cart', [ProductsController::class, 'updateCart'])->name('updateCart');
-    Route::delete('remove-from-cart', [ProductsController::class, 'removeCartItem'])->name('removeCartItem');
+    Route::get('cart', [ProductController::class, 'cart'])->name('cart');
+    Route::get('add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('addToCart');
+    Route::patch('update-cart', [ProductController::class, 'updateCart'])->name('updateCart');
+    Route::delete('remove-from-cart', [ProductController::class, 'removeCartItem'])->name('removeCartItem');
 
     Route::post('/notifications//mark-as-read', [NotificationController::class, 'markNotification'])->name('notifications.markNotification');
 });

@@ -35,7 +35,7 @@
                         @can('create post categories')
                         <a href="{{ route('postCategories.create') }}" class="btn btn-primary btn-round ml-auto" >
                             <i class="flaticon-add mr-2"></i>
-                            Add Row
+                            Add Record
                         </a> 
                         @endcan
                     </div>
@@ -150,7 +150,7 @@
         });
         // #tb_postCategories
 
-        // Add Row
+        // Add Record
         // $('#add-row').DataTable({
         //     "pageLength": 5,
         // });

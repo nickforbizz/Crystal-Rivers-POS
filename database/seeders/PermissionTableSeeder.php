@@ -177,6 +177,112 @@ class PermissionTableSeeder extends Seeder
             'created_by' => $users->random()->id
         ]);
 
+        // employee 
+        Permission::create([
+            'name' => 'create employee',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'edit employee',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'delete employee',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+
+
+
+        // product categories
+        Permission::create([
+            'name' => 'create product category',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'edit product category',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'delete product category',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+
+
+        // product 
+        Permission::create([
+            'name' => 'create product',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'edit product',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'delete product',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+
+
+        // customer 
+        Permission::create([
+            'name' => 'create customer',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'edit customer',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'delete customer',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+
+        // supplier 
+        Permission::create([
+            'name' => 'create supplier',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'edit supplier',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'delete supplier',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+
+
+        // order 
+        Permission::create([
+            'name' => 'create order',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'edit order',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
+        Permission::create([
+            'name' => 'delete order',
+            'guard_name' => 'web',
+            'created_by' => $users->random()->id
+        ]);
 
         
     }

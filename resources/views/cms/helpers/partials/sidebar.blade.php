@@ -33,7 +33,7 @@
 			</div>
 			<ul class="nav nav-primary">
 				<li class="nav-item @if(Route::currentRouteName() == 'cms') active @endif">
-					<a href="#dashboard">
+					<a href="{{ route('home') }}">
 						<i class="fas fa-home"></i>
 						<p>Dashboard</p>
 					</a>
@@ -55,7 +55,12 @@
 				</li>
 				@endif
 
-				
+				<li class="nav-item @if(Route::is('customers.*')) active @endif">
+					<a href="{{ route('customers.index') }}">
+						<i class="far fa-clone"></i>
+						<p> Customers</p>
+					</a>
+				</li>
 
 				<li class="nav-item @if(Route::is('productCategories.*')) active @endif">
 					<a href="{{ route('productCategories.index') }}">
