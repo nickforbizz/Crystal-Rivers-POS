@@ -46,7 +46,8 @@
     
         <!-- Brand -->
         <a class="navbar-brand" href="{{ route('wellcome') }}">
-          <img src="{{ asset('assets/frontend/img/brand.svg') }}" class="navbar-brand-img" alt="...">
+          Crystal Rivers
+          <!-- <img src="{{ asset('assets/frontend/img/brand.svg') }}" class="navbar-brand-img" alt="..."> -->
         </a>
     
         <!-- Toggler -->
