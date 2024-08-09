@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Events\CustomerCreated;
 use App\Traits\Cacheable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -59,5 +60,12 @@ class Customer extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'fk_user');
+	}
+
+	protected static function booted()
+	{
+		static::created(function ($customer) {
+			event(new CustomerCreated($customer));
+		});
 	}
 }

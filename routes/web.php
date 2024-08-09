@@ -54,7 +54,7 @@ Route::get('/optimize', function () {
 
 Route::get('/flush-perms', function () {
     Artisan::call('permission:cache-reset');
-    // return what you want
+    return "Flushing Complete";
 });
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

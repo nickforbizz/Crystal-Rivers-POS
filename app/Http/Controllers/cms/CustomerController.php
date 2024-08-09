@@ -16,9 +16,9 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Cache::remember('productcategory_all', 60, function () {
-            return Customer::select('client_ID', 'names', 'email', 'phone', 'address', 'created_at')
-            ->orderBy('created_at', 'desc')
+        $data = Cache::remember('customer_all', 1, function () {
+            // return Customer::select('client_ID', 'names', 'email', 'phone', 'address', 'created_at')
+            return Customer::orderBy('created_at', 'desc')
             ->get();
         });
         if ($request->ajax()) {
