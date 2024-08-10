@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Events\CustomerCreated;
+use App\Events\OrderCreated;
 use App\Events\ProductCreated;
 use App\Events\UserRegistered;
 use App\Listeners\SendCustomerCreatedNotification;
+use App\Listeners\SendOrderCreatedNotification;
 use App\Listeners\SendProductCreatedNotification;
 use App\Listeners\SendWelcomeEmail;
 use Illuminate\Auth\Events\Registered;
@@ -28,8 +30,13 @@ class EventServiceProvider extends ServiceProvider
         ProductCreated::class => [
             SendProductCreatedNotification::class,
         ],
+
         CustomerCreated::class => [
             SendCustomerCreatedNotification::class,
+        ],
+
+        OrderCreated::class => [
+            SendOrderCreatedNotification::class,
         ],
 
         UserRegistered::class =>  [SendWelcomeEmail::class, ]

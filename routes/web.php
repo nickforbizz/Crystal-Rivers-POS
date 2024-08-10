@@ -16,6 +16,7 @@ use App\Http\Controllers\cms\SearchController;
 use App\Http\Controllers\frontend\ViewsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\cms\OrderController;
+use App\Http\Controllers\cms\OrderItemController;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -97,6 +98,7 @@ Route::middleware('cms')->group(function () {
         'productCategories' => ProductCategoryController::class,
         'products' => ProductController::class,
         'orders' => OrderController::class,
+        'orderItems' => OrderItemController::class,
         'roles' => RoleController::class,
         'permissions' => PermissionController::class,
         'assignRoles' => AssignRoleController::class,

@@ -142,9 +142,9 @@ class OrderController extends Controller
                         return 'N/A';
                     }
                     $btn_edit = $btn_del = null;
-                    if (in_array('superadmin', $userRoles) || in_array('admin', $userRoles) || in_array('editor', $userRoles) || $user->id == $row->created_by) {
+                    if (in_array('superadmin', $userRoles) || in_array('admin', $userRoles) || in_array('editor', $userRoles) || $user->id == $row->fk_user) {
                         $btn_edit = '<button data-toggle="tooltip" 
-                                        onclick="editOrderItem(`' . $row->id . '`, `' . route('order_items.show', $row->id) . '`, `' . route('order_items.update', $row->id) . '`)"
+                                        onclick="editOrderItem(`' . $row->id . '`, `' . route('orderItems.show', $row->id) . '`, `' . route('orderItems.update', $row->id) . '`)"
                                         class="btn btn-link btn-primary btn-lg" 
                                         data-original-title="Edit Record">
                                     <i class="fa fa-edit"></i>
@@ -156,7 +156,7 @@ class OrderController extends Controller
                                     data-toggle="tooltip" 
                                     title="" 
                                     class="btn btn-link btn-danger" 
-                                    onclick="delRecord(`' . $row->id . '`, `' . route('order_items.destroy', $row->id) . '`, `#tb_order_items`)"
+                                    onclick="delRecord(`' . $row->id . '`, `' . route('orderItems.destroy', $row->id) . '`, `#tb_orderItems`)"
                                     data-original-title="Remove">
                                 <i class="fa fa-times"></i>
                             </button>';
@@ -168,8 +168,8 @@ class OrderController extends Controller
         }
 
 
-        $products = Cache::remember('product_all', 60, function () {
-            return Product::where('active',1)->get();
+        $products = Cache::remember('product_all', 10, function () {
+            return Product::select('id', 'quantity', 'price', 'title')->where('active',1)->get();
         });
 
         return view('cms.orders.items', compact('products', 'order'))->with('success', 'Order successfully initialized');

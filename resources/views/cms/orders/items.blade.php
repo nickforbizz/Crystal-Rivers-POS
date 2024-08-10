@@ -59,7 +59,7 @@
                                 <div class="list-group shadow mb-3">
                                     <button type="button" class="list-group-item list-group-item-secondary" aria-current="true">Order Number
                                     </button>
-                                    <button type="button" class="list-group-item list-group-item-light"> {{ $order->order_number}}</button>
+                                    <button type="button" class="list-group-item list-group-item-light"> {{ $order->order_ID}}</button>
                                 </div>
                             </div>
 
@@ -75,7 +75,7 @@
                                 <div class="list-group shadow mb-3">
                                     <button type="button" class="list-group-item list-group-item-secondary" aria-current="true"> Customer
                                     </button>
-                                    <a href="{{ route('customers.show', ['customer'=>$order->fk_customer]) }}" class="list-group-item list-groupf-item-light nav-item "> {{ $order->customer?->name}} </a>
+                                    <a href="{{ route('customers.show', ['customer'=>$order->fk_customer]) }}" class="list-group-item list-groupf-item-light nav-item "> {{ $order->customer?->names}} </a>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                                 <div class="list-group shadow mb-3">
                                     <button type="button" class="list-group-item list-group-item-secondary" aria-current="true"> Total Amount
                                     </button>
-                                    <button type="button" class="list-group-item list-group-item-light"> {{ ucfirst($order->total_amount)}}</button>
+                                    <button type="button" class="list-group-item list-group-item-light"> {{ ucfirst($order->amount)}}</button>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
 
                                 <div class="modal-body">
                                     <!-- form -->
-                                    <form id="orders-create" action="{{ route('order_items.store' ) }}" method="post">
+                                    <form id="orders-create" action="{{ route('orderItems.store' ) }}" method="post">
 
                                         @csrf
                                         <input type="hidden" name="fk_order" value="{{ $order->id }}">
@@ -165,7 +165,7 @@
                                                     <select name="fk_product" id="fk_product" class="form-control">
                                                         <option selected> -- select product --</option>
                                                         @forelse($products as $product)
-                                                        <option value="{{ $product->id }}" data-quantity="{{ $product->quantity }}" data-price="{{ $product->selling_price }}" @if(isset($order->id)) {{ $product->id == $order->fk_product ? 'selected' : '' }} @endif> {{ $product->title }} </option>
+                                                        <option value="{{ $product->id }}" data-quantity="{{ $product->quantity }}" data-price="{{ $product->price }}" @if(isset($order->id)) {{ $product->id == $order->fk_product ? 'selected' : '' }} @endif> {{ $product->title }} </option>
                                                         @empty
                                                         <option selected disabled> -- No item -- </option>
                                                         @endforelse
@@ -309,6 +309,25 @@
             ]
         });
         // #tb_order_items
+
+        
+        $("#orders-create").submit(function (e) {
+            let quantity = parseInt($("#quantity").val());
+            if(quantity < 1){
+                $("#orderItemModal").modal('hide');
+                $(".submit-form-btn").html(`Submit`).attr('disabled', false);
+                e.preventDefault();
+                $.notify("Quantity cannot be 0",{
+				type: 'danger',
+				placement: {
+					from: 'top',
+					align: 'right'
+				},
+				time: 1000,
+				delay: 0,
+			    });
+            }
+        })
 
 
 
