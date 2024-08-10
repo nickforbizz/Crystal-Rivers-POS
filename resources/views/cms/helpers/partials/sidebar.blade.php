@@ -57,28 +57,35 @@
 
 				<li class="nav-item @if(Route::is('customers.*')) active @endif">
 					<a href="{{ route('customers.index') }}">
-						<i class="far fa-clone"></i>
+						<i class="fas fa-user-minus"></i>
 						<p> Customers</p>
 					</a>
 				</li>
 
 				<li class="nav-item @if(Route::is('productCategories.*')) active @endif">
 					<a href="{{ route('productCategories.index') }}">
-						<i class="far fa-clone"></i>
+						<i class="fa fa-tasks"></i>
 						<p> Product Categories</p>
 					</a>
 				</li>
 
 				<li class="nav-item @if(Route::is('products.*')) active @endif">
 					<a href="{{ route('products.index') }}">
-						<i class="far fa-edit"></i>
+						<i class="fas fa-box"></i>
 						<p> Products</p>
+					</a>
+				</li>
+
+				<li class="nav-item @if(Route::is('orders.*')) active @endif">
+					<a href="{{ route('orders.index') }}">
+						<i class="fa fa-shopping-bag"></i>
+						<p> Orders </p>
 					</a>
 				</li>
 
 				<li class="nav-item @if(Route::is('reports.*')) active @endif">
 					<a href="{{ route('reports.index') }}">
-						<i class="far fa-edit"></i>
+						<i class="fas fa-chart-bar"></i>
 						<p> Reports</p>
 					</a>
 				</li>

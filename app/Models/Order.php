@@ -6,8 +6,11 @@
 
 namespace App\Models;
 
+use App\Events\OrderCreated;
+use App\Traits\Cacheable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -35,7 +38,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Order extends Model
 {
-	use SoftDeletes;
+	use SoftDeletes, HasFactory;
+
+	use Cacheable;
 	protected $table = 'orders';
 
 	protected $casts = [
@@ -73,5 +78,12 @@ class Order extends Model
 	public function transactions()
 	{
 		return $this->hasMany(Transaction::class, 'fk_order');
+	}
+
+	protected static function booted()
+	{
+		static::created(function ($order) {
+			event(new OrderCreated($order));
+		});
 	}
 }

@@ -17,6 +17,13 @@ class CustomerRequest extends FormRequest
         return (Auth::user()->can('create customer') || Auth::user()->can('edit customer'));
     }
 
+
+
+    /**
+     * prepareForValidation function
+     *
+     * @return void
+     */
     public function prepareForValidation()
     {
         // Concatenate first_name and last_name to form the names attribute
@@ -26,6 +33,9 @@ class CustomerRequest extends FormRequest
             'names' => trim($this->first_name . ' ' . $this->last_name),
         ]);
     }
+
+
+
     /**
      * Get the validation rules that apply to the request.
      *

@@ -1,14 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\cms;
 
-use App\Models\Order;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
+
 use App\Http\Requests\OrderRequest;
+use App\Models\Order;
 use App\Models\Customer;
 use App\Models\OrderItem;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use DataTables;
 
 class OrderController extends Controller
 {
@@ -73,7 +77,7 @@ class OrderController extends Controller
                 ->make(true);
         }
         $customers = Cache::remember('customer_all', 200, function () {
-            return Customer::where('active',1)->get();
+            return Customer::select('id', 'names', 'email')->where('active',1)->get();
         });
 
         return view('cms.orders.index', compact('customers'));
@@ -97,7 +101,12 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        //
+
+        $order = Order::create($request->validated());
+        if($order->save()){
+            return redirect()->route('orders.show', ['order' => $order->id])->with('success', 'Order successfully initialized');
+        }
+        return redirect()->back()->with('error', 'Error while Initializing your Order');
     }
 
     /**
