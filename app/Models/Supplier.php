@@ -6,7 +6,10 @@
 
 namespace App\Models;
 
+use App\Events\SupplierCreated;
+use App\Traits\Cacheable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -33,7 +36,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Supplier extends Model
 {
-	use SoftDeletes;
+	use SoftDeletes, HasFactory;
+
+	use Cacheable;
 	protected $table = 'suppliers';
 
 	protected $casts = [
@@ -55,5 +60,12 @@ class Supplier extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'fk_user');
+	}
+
+	protected static function booted()
+	{
+		static::created(function ($supplier) {
+			event(new SupplierCreated($supplier));
+		});
 	}
 }

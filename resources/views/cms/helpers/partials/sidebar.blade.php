@@ -55,10 +55,18 @@
 				</li>
 				@endif
 
+				<li class="nav-item @if(Route::is('suppliers.*')) active @endif">
+					<a href="{{ route('suppliers.index') }}">
+						<i class="fas fa-user-plus"></i>
+						<p> Suppliers </p>
+					</a>
+				</li>
+
+
 				<li class="nav-item @if(Route::is('customers.*')) active @endif">
 					<a href="{{ route('customers.index') }}">
 						<i class="fas fa-user-minus"></i>
-						<p> Customers</p>
+						<p> Customers </p>
 					</a>
 				</li>
 

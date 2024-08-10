@@ -17,6 +17,7 @@ use App\Http\Controllers\frontend\ViewsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\cms\OrderController;
 use App\Http\Controllers\cms\OrderItemController;
+use App\Http\Controllers\cms\SupplierController;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -94,6 +95,7 @@ Route::middleware('cms')->group(function () {
         'users' => UserController::class,
         'posts' => PostController::class,
         'postCategories' => PostCategoryController::class,
+        'suppliers' => SupplierController::class,
         'customers' => CustomerController::class,
         'productCategories' => ProductCategoryController::class,
         'products' => ProductController::class,
