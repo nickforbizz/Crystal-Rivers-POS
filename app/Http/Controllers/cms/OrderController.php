@@ -5,6 +5,7 @@ namespace App\Http\Controllers\cms;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
 
 use App\Http\Requests\OrderRequest;
@@ -38,11 +39,22 @@ class OrderController extends Controller
                     }
                     return date_format($row->created_at, 'Y/m/d H:i');
                 })
+                ->editColumn('order_ID', function ($row) {
+                    return '<a data-toggle="tooltip" 
+                            href="' . route('orders.show', $row->id) . '" 
+                            class="btn btn-link btn-primary btn-lg" 
+                            data-original-title="Edit Record">
+                        ' . $row->order_ID . '
+                    </a>';
+                })
                 ->editColumn('order_date', function ($row) {
                     if(is_null($row->order_date)){
                         return 'N/A';
                     }
                     return date_format($row->order_date, 'Y/m/d');
+                })
+                ->addColumn('items', function ($row) {
+                    return $row->order_items->count();
                 })
                 ->editColumn('customer', function ($row) {
                     if(is_null($row->fk_customer)){
@@ -73,7 +85,7 @@ class OrderController extends Controller
                     }
                     return $btn_edit . $btn_del;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'items', 'order_ID'])
                 ->make(true);
         }
         $customers = Cache::remember('customer_all', 200, function () {
@@ -219,9 +231,20 @@ class OrderController extends Controller
 
     public function invoice(Order $order) {
         // Load the view file and pass order data to it
-        $pdf = Pdf::loadView('cms.orders.invoice', compact('order'));
+        $pdf_vals = [
+            'order_ID' => $order->order_ID,
+            'status' => ucwords($order->status),
+            'order_date' => $order->order_date->format('Y-m-d'),
+            'customer_names' => $order->customer->names,
+            'customer_email' => $order->customer->email,
+            'customer_phone' => $order->customer->phone,
+            'order_items' => $order->order_items,
+            'amount' => number_format($order->amount, 2),
+        ];
+        // dd($pdf_vals);
+        $pdf = Pdf::loadView('cms.orders.invoice', compact('pdf_vals'))->setPaper('A4', 'portrait');
 
         // Render the PDF and force download
-        return $pdf->download('invoice_' . $order->order_number . '.pdf');
+        return $pdf->stream('invoice_' . str_replace('/','_',$order->order_ID ). '.pdf');
     }
 }

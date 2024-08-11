@@ -109,7 +109,7 @@ class OrderItemController extends Controller
         // update order
         $order = Order::find($request->fk_order);
         $order->amount += (float) $request->total_amount;
-        $order->status = 'pending';
+        $order->status = 'Pending';
         $order->save();
 
         // reduce stock

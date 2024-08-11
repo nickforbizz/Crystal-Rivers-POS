@@ -49,6 +49,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th> Order Number </th>
                                     <th> Customer</th>
                                     <th> Amount </th>
                                     <th> Order Date </th>
@@ -135,6 +136,9 @@
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
+                },
+                {
+                    data: 'order_ID'
                 },
                 {
                     data: 'customer'

@@ -27,13 +27,15 @@ class StoreUserRequest extends FormRequest
     {
         $rules = [
             'fname' => 'required|min:2',
+            'lname' => 'string|nullable',
             'email' => ['required', Rule::unique('users')],
             'phone' => 'string|nullable',
+            'password' => 'string|nullable',
         ];
         
-        if ($this->has('password')) {
-            $rules['password'] = 'nullable|confirmed|min:5';
-        }
+        // if ($this->has('password')) {
+        //     $rules['password'] = 'nullable|confirmed|min:5';
+        // }
 
         return $rules;
     }

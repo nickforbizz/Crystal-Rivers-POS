@@ -35,18 +35,25 @@
         .shadow {
             box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         }
+
+        .footer {
+            font-size: 0.875rem;
+            padding: 1rem;
+            background-color: rgb(241 245 249);
+        }
     </style>
 </head>
 
 <body>
     <div style="padding: 10px 25px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
         <div class="card-header">
-            <h2>Invoice -- #{{ $order->order_number }} <b style="float: right;">{{ ucwords($order->status) }}</b></h2> 
+            <h2 style="text-align: center;">Crystal Rivers</h2>
+            <h4>Invoice ID  #{{ $pdf_vals['order_ID'] }} <b style="float: right;">{{ $pdf_vals['status'] }}</b></h4>
             <hr>
-            <p>Date: <b style="float: right;">{{ $order->order_date->format('Y-m-d') }}</b></p>
-            <p >Customer: <b style="float: right;">{{ $order->customer->name }}</b></p>
-            <p > _ <b style="float: right;">{{ $order->customer->email }}</b></p>
-            <p > _ <b style="float: right;">{{ $order->customer->phone }}</b></p>
+            <p>Date: <b style="float: right;">{{ $pdf_vals['order_date'] }}</b></p>
+            <p>Customer: <b style="float: right;">{{ $pdf_vals['customer_names'] }}</b></p>
+            <p> _ <b style="float: right;">{{ $pdf_vals['customer_email'] }}</b></p>
+            <p> _ <b style="float: right;">{{ $pdf_vals['customer_phone'] }}</b></p>
 
         </div>
     </div>
@@ -64,7 +71,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($order->order_items as $item)
+                @foreach ($pdf_vals['order_items'] as $item)
                 <tr>
                     <td>{{ $item->product->title }}</td>
                     <td>{{ $item->quantity }}</td>
@@ -77,9 +84,15 @@
 
         <div style="margin-top: 6px;">
             <hr>
-            <p >Total Amount: <b style="float: right;">{{ number_format($order->total_amount, 2) }}</b></p>
+            <p>Total Amount: <b style="float: right;">{{ $pdf_vals['amount'] }}</b></p>
         </div>
 
+    </div>
+
+
+    <div class="footer margin-top">
+        <div>Thank you</div>
+        <div>&copy; Crystal Rivers</div>
     </div>
 </body>
 

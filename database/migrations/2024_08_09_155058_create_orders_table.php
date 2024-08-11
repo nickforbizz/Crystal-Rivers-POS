@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('order_ID')->unique();
             $table->dateTime('order_date');
             $table->double('amount', 8, 2);
-            $table->enum('status', ['Initiated', 'Processing', 'completed', 'cancelled', 'inactive']);
+            $table->enum('status', ['Initiated', 'Pending', 'Processing', 'completed', 'cancelled', 'inactive']);
             $table->string('active')->default(1);
             $table->softDeletes();
             $table->timestamps();
