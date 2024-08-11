@@ -4,8 +4,10 @@ namespace App\Http\Controllers\cms;
 
 use App\Exports\PostReportExport;
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Supplier;
 use App\Models\User;
 use App\Services\ReportService;
 use Illuminate\Http\Request;
@@ -82,6 +84,43 @@ class ReportController extends Controller
         ]);
     }
 
+
+    /**
+     * customers function
+     *
+     * @param  Request       $request
+     * @param  ReportService $reportService
+     * @return void
+     */
+    public function customers(Request $request, ReportService $reportService) {
+        $selectedYear = $request->get('year', Carbon::now()->year);
+        $report = $reportService->getCountByMonth(new Customer, $selectedYear);
+
+        return view('cms.reports.customers',[
+            'chartData' => $report['chartData'],
+            'years' => $report['years'],
+            'selectedYear' => $selectedYear
+        ]);
+    }
+
+
+    /**
+     * suppliers function
+     *
+     * @param  Request       $request
+     * @param  ReportService $reportService
+     * @return void
+     */
+    public function suppliers(Request $request, ReportService $reportService) {
+        $selectedYear = $request->get('year', Carbon::now()->year);
+        $report = $reportService->getCountByMonth(new Supplier, $selectedYear);
+
+        return view('cms.reports.suppliers',[
+            'chartData' => $report['chartData'],
+            'years' => $report['years'],
+            'selectedYear' => $selectedYear
+        ]);
+    }
 
 
     /**

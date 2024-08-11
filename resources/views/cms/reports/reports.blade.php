@@ -51,7 +51,7 @@
                         <div class="list-group shadow mb-3">
                             <button type="button" class="list-group-item list-group-item-secondary" aria-current="true"> Customer
                             </button>
-                            <a href="#" class="list-group-item list-groupf-item-light nav-item "> View </a>
+                            <a href="{{ route('reports.customers') }}" class="list-group-item list-groupf-item-light nav-item "> View </a>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                         <div class="list-group shadow mb-3">
                             <button type="button" class="list-group-item list-group-item-secondary" aria-current="true"> Suppliers
                             </button>
-                            <a href="#" class="list-group-item list-groupf-item-light nav-item "> View </a>
+                            <a href="{{ route('reports.suppliers') }}" class="list-group-item list-groupf-item-light nav-item "> View </a>
                         </div>
                     </div>
     
