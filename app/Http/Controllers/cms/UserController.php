@@ -26,7 +26,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // return datatable of the makes available
-        $data = Cache::remember('user_all', 60, function () {
+        $data = Cache::remember('user_all', 1, function () {
             return User::where('active', 1)->get();
         });
         if ($request->ajax()) {

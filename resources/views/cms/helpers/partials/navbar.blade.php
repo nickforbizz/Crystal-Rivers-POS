@@ -41,14 +41,14 @@
 
 								@forelse($notifications as $notification)
 								<a href="{{ route('notifications.index') }}">
-									<div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
-									<div class="notif-content">
+									<div class="notif-content p-0 pl-4">
 										<span class="block">
 										{{ $notification['data']['message'] }}
 										</span>
 										<span class="time">{{  Carbon::parse($notification->created_at)->diffForHumans() }}</span> 
 									</div>
 								</a>
+								<hr class="m-0">
 								@empty
 								<p class="p-3"> -- No notification -- </p>
 								@endforelse
