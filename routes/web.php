@@ -18,6 +18,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\cms\OrderController;
 use App\Http\Controllers\cms\OrderItemController;
 use App\Http\Controllers\cms\SupplierController;
+use App\Http\Controllers\cms\TransactionController;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -85,8 +86,12 @@ Route::middleware('cms')->group(function () {
     Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 
-    // Downloadable Reports
+    // Reports
     Route::get('reports/download/csv', [ReportController::class, 'downloadCsv'])->name('reports.download.csv');
+    Route::get('reports/index', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('reports/users', [ReportController::class, 'users'])->name('reports.users');
+    Route::get('reports/orders', [ReportController::class, 'orders'])->name('reports.orders');
+    Route::get('reports/products', [ReportController::class, 'products'])->name('reports.products');
 
 
 
@@ -101,6 +106,7 @@ Route::middleware('cms')->group(function () {
         'products' => ProductController::class,
         'orders' => OrderController::class,
         'orderItems' => OrderItemController::class,
+        // 'transactions' => TransactionController::class,
         'roles' => RoleController::class,
         'permissions' => PermissionController::class,
         'assignRoles' => AssignRoleController::class,
@@ -113,6 +119,8 @@ Route::middleware('cms')->group(function () {
     // Transactions
     Route::get('orders/{order}/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
     Route::post('orders/{order}/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+    Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    // Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
     // CART Routes
     Route::get('cart', [ProductController::class, 'cart'])->name('cart');

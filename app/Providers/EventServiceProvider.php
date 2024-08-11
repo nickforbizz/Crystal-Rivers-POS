@@ -6,11 +6,13 @@ use App\Events\CustomerCreated;
 use App\Events\OrderCreated;
 use App\Events\ProductCreated;
 use App\Events\SupplierCreated;
+use App\Events\TransactionCreated;
 use App\Events\UserRegistered;
 use App\Listeners\SendCustomerCreatedNotification;
 use App\Listeners\SendOrderCreatedNotification;
 use App\Listeners\SendProductCreatedNotification;
 use App\Listeners\SendSupplierCreatedNotification;
+use App\Listeners\SendTransactionCreatedNotification;
 use App\Listeners\SendWelcomeEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -43,6 +45,10 @@ class EventServiceProvider extends ServiceProvider
 
         OrderCreated::class => [
             SendOrderCreatedNotification::class,
+        ],
+
+        TransactionCreated::class => [
+            SendTransactionCreatedNotification::class,
         ],
 
         UserRegistered::class =>  [SendWelcomeEmail::class, ]

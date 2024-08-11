@@ -91,6 +91,13 @@
 					</a>
 				</li>
 
+				<li class="nav-item @if(Route::is('transactions.*')) active @endif">
+					<a href="{{ route('transactions.index') }}">
+						<i class="fas fa-money-check-alt"></i>
+						<p> Transactions </p>
+					</a>
+				</li>
+
 				<li class="nav-item @if(Route::is('reports.*')) active @endif">
 					<a href="{{ route('reports.index') }}">
 						<i class="fas fa-chart-bar"></i>

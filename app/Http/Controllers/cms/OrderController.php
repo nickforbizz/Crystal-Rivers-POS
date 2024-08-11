@@ -42,7 +42,7 @@ class OrderController extends Controller
                 ->editColumn('order_ID', function ($row) {
                     return '<a data-toggle="tooltip" 
                             href="' . route('orders.show', $row->id) . '" 
-                            class="btn btn-link btn-primary btn-lg" 
+                            class="" 
                             data-original-title="Edit Record">
                         ' . $row->order_ID . '
                     </a>';

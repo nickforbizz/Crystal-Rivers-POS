@@ -4,7 +4,8 @@ namespace App\Http\Controllers\cms;
 
 use App\Exports\PostReportExport;
 use App\Http\Controllers\Controller;
-use App\Models\Post;
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use App\Services\ReportService;
 use Illuminate\Http\Request;
@@ -14,12 +15,88 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
-    public function index(Request $request, ReportService $reportService)
+
+    /**
+     * index function
+     *
+     * @return void
+     */
+    public function index() {
+        return view('cms.reports.reports');
+    }
+
+
+    /**
+     * users function
+     *
+     * @param  Request       $request
+     * @param  ReportService $reportService
+     * @return void
+     */
+    public function users(Request $request, ReportService $reportService) {
+        $selectedYear = $request->get('year', Carbon::now()->year);
+        $report = $reportService->getCountByMonth(new User, $selectedYear);
+
+        return view('cms.reports.users',[
+            'chartData' => $report['chartData'],
+            'years' => $report['years'],
+            'selectedYear' => $selectedYear
+        ]);
+    }
+
+
+    /**
+     * orders function
+     *
+     * @param  Request       $request
+     * @param  ReportService $reportService
+     * @return void
+     */
+    public function orders(Request $request, ReportService $reportService) {
+        $selectedYear = $request->get('year', Carbon::now()->year);
+        $report = $reportService->getCountByMonth(new Order, $selectedYear);
+
+        return view('cms.reports.orders',[
+            'chartData' => $report['chartData'],
+            'years' => $report['years'],
+            'selectedYear' => $selectedYear
+        ]);
+    }
+
+
+    /**
+     * products function
+     *
+     * @param  Request       $request
+     * @param  ReportService $reportService
+     * @return void
+     */
+    public function products(Request $request, ReportService $reportService) {
+        $selectedYear = $request->get('year', Carbon::now()->year);
+        $report = $reportService->getCountByMonth(new Product, $selectedYear);
+
+        return view('cms.reports.products',[
+            'chartData' => $report['chartData'],
+            'years' => $report['years'],
+            'selectedYear' => $selectedYear
+        ]);
+    }
+
+
+
+    /**
+     * index function
+     *
+     * @param  Request       $request
+     * @param  ReportService $reportService
+     * @return void
+     */
+    public function userReport(Request $request, ReportService $reportService)
     {
         $selectedYear = $request->get('year', Carbon::now()->year);
 
         try {
-            $posts_report = $reportService->getCountByMonth(new Post, $selectedYear);
+            $posts_report = $reportService->getCountByMonth(new Product, $selectedYear);
             $users_report = $reportService->getCountByMonth(new User, $selectedYear);
         } catch (\Throwable $th) {
             throw $th;

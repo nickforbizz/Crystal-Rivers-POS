@@ -6,7 +6,10 @@
 
 namespace App\Models;
 
+use App\Events\TransactionCreated;
+use App\Traits\Cacheable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -32,7 +35,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Transaction extends Model
 {
-	use SoftDeletes;
+	use SoftDeletes, HasFactory;
+
+	use Cacheable;
+
 	protected $table = 'transactions';
 
 	protected $casts = [
@@ -59,5 +65,12 @@ class Transaction extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'fk_user');
+	}
+
+	protected static function booted()
+	{
+		static::created(function ($transaction) {
+			event(new TransactionCreated($transaction));
+		});
 	}
 }

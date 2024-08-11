@@ -254,6 +254,51 @@
 				});
 			});
 		}
+
+
+		function loadChart(data, load_area, entity, selectedYear) {
+        var labels = [];
+        var values = [];
+        for (var key in data) {
+            labels.push(key);
+            values.push(data[key]);
+        }
+
+        var ctx = document.getElementById(load_area);
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: entity + ' Count',
+                    data: values,
+                    borderColor: "#1d7af3",
+                    pointBorderColor: "#FFF",
+                    pointBackgroundColor: "#1d7af3",
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 1,
+                    pointRadius: 4,
+                    backgroundColor: 'transparent',
+                    fill: true,
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: entity + ' Count by Month for Year ' + selectedYear
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
 	</script>
 
 	@stack('scripts')
