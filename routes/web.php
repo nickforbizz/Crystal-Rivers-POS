@@ -92,6 +92,8 @@ Route::middleware('cms')->group(function () {
     Route::get('reports/users', [ReportController::class, 'users'])->name('reports.users');
     Route::get('reports/orders', [ReportController::class, 'orders'])->name('reports.orders');
     Route::get('reports/products', [ReportController::class, 'products'])->name('reports.products');
+    Route::get('reports/customers', [ReportController::class, 'customers'])->name('reports.customers');
+    Route::get('reports/suppliers', [ReportController::class, 'suppliers'])->name('reports.suppliers');
 
 
 
