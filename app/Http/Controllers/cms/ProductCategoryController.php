@@ -56,7 +56,7 @@ class ProductCategoryController extends Controller
         }
 
         // render view
-        return view('cms.productCategories.index');
+        return view('cms.productcategories.index');
     }
 
     /**
@@ -64,7 +64,7 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-        return view('cms.productCategories.create');
+        return view('cms.productcategories.create');
     }
 
     /**
@@ -90,7 +90,7 @@ class ProductCategoryController extends Controller
      */
     public function edit(ProductCategory $productCategory)
     {
-        return view('cms.productCategories.create', compact('productCategory'));
+        return view('cms.productcategories.create', compact('productCategory'));
     }
 
     /**
@@ -102,7 +102,7 @@ class ProductCategoryController extends Controller
 
         // Redirect the user to the user's profile page
         return redirect()
-            ->route('productCategories.index')
+            ->route('productcategories.index')
             ->with('success', 'Record updated successfully!');
     }
 
