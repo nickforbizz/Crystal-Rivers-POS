@@ -58,7 +58,7 @@
                         <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="order_number"> Order Number </label>
-                                    <input id="order_number" type="text" readonly class="form-control " name="order_number" value="{{ $order->order_number ?? '' }}" required="true" />
+                                    <input id="order_number" type="text" readonly class="form-control " name="order_number" value='1' required="true" />
                                     @error('order_number') <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -109,7 +109,8 @@
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <label for="total_amount"> Total Amount </label>
-                                    <input id="total_amount" type="number" min=0 class="form-control " name="total_amount" value="{{ $order->total_amount ?? '' }}" readonly required="true" />
+                                    {{-- <input id="total_amount" type="number" min=0 class="form-control " name="total_amount" value="{{ $order->total_amount ?? '' }}" readonly required="true" /> --}}
+                                    <input id="total_amount" type="number" min=0 class="form-control " name="total_amount" value="1" readonly required="true" />
                                     @error('total_amount') <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -120,7 +121,7 @@
                         <div class="card">
                             <div class="form-group">
                                 <button class="btn btn-success btn-round float-right">Submit</button>
-                                <a href="{{ route('orders.show', ['order'=>$order->id]) }}" class="btn btn-info btn-round float-left"> Add Items</a>
+                                {{-- <a href="{{ route('orders.show', ['order'=>$order->id]) }}" class="btn btn-info btn-round float-left"> Add Items</a> --}}
                             </div>
                         </div>
                     </form>
