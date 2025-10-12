@@ -63,6 +63,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request, Order $order)
     {
+        dd($order);
         $request->validate([
             'payment_method' => 'required|in:cash,mpesa',
         ]);
