@@ -20,23 +20,6 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct()
-    {
-
-        #Added the construct to help me debug some of the functions.
-
-        // $this->middleware('auth');
-        // $this->middleware('role:superadmin|admin|editor', ['only' => ['index','show']]);
-        // $this->middleware('role:superadmin|admin|editor', ['only' => ['create','store','edit','update']]);
-        // $this->middleware('role:superadmin|admin', ['only' => ['destroy']]);
-        
-        // Apply the 'cms' middleware to everything except create() and store()
-        $this->middleware('cms')->except(['create', 'store']);
-
-        // Apply 'web' middleware to all routes except 'index'
-        $this->middleware('web')->except(['create', 'store']);
-
-    }
 
     public function index(Request $request)
     {
@@ -119,12 +102,14 @@ class OrderController extends Controller
     public function create()
     {
         $customers = Cache::remember('customer_all', 200, function () {
-            return Customer::where('active',1)->get();
+            #corrected from active = 1 to active = 'yes'
+            return Customer::where('active','yes')->get();
         });
+        $products = Product::all();
         #this is to catchh the error of null in the view
         $order = collect(['id'=>1, 'fk_customer'=>null, 'order_number'=>Str::upper(Str::random(10)), 'order_date'=>now(), 'amount'=>0, 'status'=>'pending', 'active'=>'1','total_amount'=>100]);
         // dd( $order);
-        return view('cms.orders.create', compact('customers', 'order'));
+        return view('cms.orders.create', compact('customers', 'order','products'));
     }
 
     /**

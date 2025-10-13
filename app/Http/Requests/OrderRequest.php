@@ -32,10 +32,8 @@ class OrderRequest extends FormRequest
         $this->merge([
             'fk_user' => Auth::id(),
             'order_ID' => $order_number,
-            'amount' => 0,
             'status' => 'Initiated',
             #for debugging purposes
-            'fk_customer' => 1
         ]);
     }
 
@@ -56,7 +54,7 @@ class OrderRequest extends FormRequest
             'order_ID' => 'required',
             'order_date' => 'required',
             'status' => 'required',
-            'amount' => 'nullable',
+            'amount' => 'required|numeric',
             'active' => 'nullable',
         ];
     }

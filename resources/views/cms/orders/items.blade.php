@@ -232,7 +232,7 @@
                                         
                                                     <div class="mb-3">
                                                     <label for="payment_method" class="form-label fw-semibold">Payment Method</label>
-                                                    <select name="payment_method" id="payment_method" class="form-select" required>
+                                                    <select name="payment_method" id="payment_method" class="form-control shadow-sm rounded" required>
                                                         <option value="">Select Payment Method</option>
                                                         <option value="cash">💵 Cash</option>
                                                         <option value="mpesa">📱 M-PESA</option>

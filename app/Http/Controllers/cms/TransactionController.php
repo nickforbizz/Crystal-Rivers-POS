@@ -63,16 +63,13 @@ class TransactionController extends Controller
      */
     public function store(Request $request, Order $order)
     {
-        dd($order);
         $request->validate([
-            'payment_method' => 'required|in:cash,mpesa',
+            'payment_method' => 'required|in:cash,mpesa,visa,mastercard,paypal',
         ]);
-
+        dd($request->all());
         if ($order->amount < 1) {
             return redirect()->route('orders.show', $order)->with('error', 'Error, Transaction cant be completed with 0 amount.');
         }
-
-        $mpesa_transaction_id = $cash_transaction_id = null;
 
         if ($request->payment_method == 'cash') {
             $cash_transaction_id =  'CSH' . date('Ymd') . '/' . sprintf("%03d", $order->id) . '/' . strtoupper(Str::random(3));
