@@ -8,6 +8,8 @@
         "php": "^8.1",
         "barryvdh/laravel-dompdf": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
+        "iankumu/mpesa": "^2.2",
+        "laravel/cashier": "^16.0",
         "laravel/fortify": "^1.16",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
@@ -16,6 +18,7 @@
         "maatwebsite/excel": "^3.1",
         "predis/predis": "^2.1",
         "rap2hpoutre/laravel-log-viewer": "^2.3",
+        "safaricom/mpesa": "^1.0",
         "spatie/laravel-permission": "^5.10",
         "yajra/laravel-datatables": "^10.0"
     },
@@ -29,7 +32,8 @@
         "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.0",
         "reliese/laravel": "^1.2",
-        "spatie/laravel-ignition": "^2.0"
+        "spatie/laravel-ignition": "^2.0",
+        "timwassenburg/laravel-service-generator": "^1.0"
     },
     "autoload": {
         "psr-4": {

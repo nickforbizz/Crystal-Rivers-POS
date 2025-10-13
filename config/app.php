@@ -200,6 +200,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        \Safaricom\Mpesa\MpesaServiceProvider::class,
 
     ],
 
@@ -216,7 +217,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'Str' => Illuminate\Support\Str::class
+        'Str' => Illuminate\Support\Str::class,
+        'Mpesa'=> \Safaricom\Mpesa\MpesaServiceProvider::class,
     ])->toArray(),
 
 ];

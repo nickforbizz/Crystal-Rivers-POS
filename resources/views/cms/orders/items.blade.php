@@ -214,58 +214,63 @@
                     </div>
                     <!-- .modal -->
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="orderPayModal" tabindex="-1" role="dialog" aria-labelledby="orderPayModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header bg-primary">
-                                    <h5 class="modal-title text-white" id="orderPayModalLabel">Pay Order {{ $order->order_number }} </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-
-                                <div class="modal-body">
-                                    <!-- form -->
-                                    <form id="orders-create" action="{{ route('transactions.store', $order) }}" method="post">
-
-                                        @csrf
-                                        <input type="hidden" name="fk_order" value="{{ $order->id }}">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="payment_method">Payment Method</label>
-                                                    <select name="payment_method" id="payment_method" class="form-control" required>
-                                                        <option value="cash">Cash</option>
-                                                        <option value="mpesa">M-PESA</option>
-                                                    </select>
+                                        <!-- Payment Modal -->
+                                        <div class="modal fade" id="orderPayModal" tabindex="-1" role="dialog" aria-labelledby="orderPayModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content border-0 shadow-lg rounded-3">
+                                                <div class="modal-header bg-primary text-white">
+                                                <h5 class="modal-title fw-bold" id="orderPayModalLabel">
+                                                    Pay Order {{ $order->order_number }}
+                                                </h5>
+                                                <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-
+                                        
+                                                <div class="modal-body p-4">
+                                                <form id="orders-create" action="{{ route('transactions.store', $order) }}" method="POST" novalidate>
+                                                    @csrf
+                                                    <input type="hidden" name="fk_order" value="{{ $order->id }}">
+                                        
+                                                    <div class="mb-3">
+                                                    <label for="payment_method" class="form-label fw-semibold">Payment Method</label>
+                                                    <select name="payment_method" id="payment_method" class="form-control shadow-sm rounded" required>
+                                                        <option value="">Select Payment Method</option>
+                                                        <option value="cash">💵 Cash</option>
+                                                        <option value="mpesa">📱 M-PESA</option>
+                                                        <option value="visa">💳 Visa</option>
+                                                        <option value="mastercard">💳 Mastercard</option>
+                                                        <option value="paypal">🌍 PayPal</option>
+                                                    </select>
+                                                    <div class="invalid-feedback">Please select a payment method.</div>
+                                                    </div>
+                                        
+                                                    <div id="extra-fields"></div>
+                                        
+                                                    <div class="mb-3">
+                                                    <label for="amount" class="form-label fw-semibold">Amount (Ksh)</label>
+                                                    <input type="number" class="form-control bg-light" id="amount" name="amount" value="{{$order->amount}}" min="1" readonly required>
+                                                    <div class="invalid-feedback">Enter a valid amount.</div>
+                                                    </div>
+                                        
+                                                    <div class="d-flex justify-content-between mt-4">
+                                                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                    <button type="submit" class="btn btn-success rounded-pill px-5 fw-bold">
+                                                        Submit
+                                                    </button>
+                                                    </div>
+                                                </form>
+                                                </div>
+                                            </div>
                                             </div>
                                         </div>
-
-                                        <div class="">
-                                            <hr>
-                                            <div class="form-group">
-                                                <button type="button" class="btn btn-round  btn-secondary  float-left" data-dismiss="modal">Close</button>
-                                                <button class="btn btn-success btn-round btn-blodck float-right submit-form-btn">Submit</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <!-- End form -->
+  
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-                    <!-- .modal -->
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- .page-inner -->
+                    <!-- .page-inner -->
 
 @endsection
 
@@ -351,6 +356,95 @@
         $('#quantity').on('input', function() {
             computeTotalAmt()
         });
+        const paymentSelect = $('#payment_method');
+    const extraFieldsDiv = $('#extra-fields');
+    const form = $('#orders-create');
+
+    paymentSelect.on('change', function () {
+        const method = $(this).val();
+        let html = '';
+        switch (method) {
+            case 'mpesa':
+                html = `
+                    <div class="form-group">
+                        <label for="mpesa_number">M-PESA Number</label>
+                        <input type="tel" class="form-control" name="mpesa_number" id="mpesa_number"
+                            placeholder="Enter M-PESA number (e.g. 0712345678)"
+                            pattern="^07[0-9]{8}$" required>
+                        <div class="invalid-feedback">Enter a valid Kenyan M-PESA number (07XXXXXXXX).</div>
+                    </div>`;
+                break;
+            case 'visa':
+                html = `
+                    <div class="form-group">
+                        <label for="visa_card_number">Visa Card Number</label>
+                        <input type="text" class="form-control" name="visa_card_number" id="visa_card_number"
+                            placeholder="Enter 16-digit Visa card number"
+                            pattern="^4[0-9]{12}(?:[0-9]{3})?$"
+                            maxlength="19" required>
+                        <div class="invalid-feedback">Enter a valid Visa card number.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="visa_expiry">Expiry Date</label>
+                        <input type="month" class="form-control" name="visa_expiry" id="visa_expiry" required>
+                        <div class="invalid-feedback">Please select the card expiry date.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="visa_cvv">CVV</label>
+                        <input type="password" class="form-control" name="visa_cvv" id="visa_cvv"
+                            maxlength="3" pattern="^[0-9]{3}$"
+                            placeholder="Enter 3-digit CVV" required>
+                        <div class="invalid-feedback">Enter a valid 3-digit CVV.</div>
+                    </div>`;
+                break;
+            case 'mastercard':
+                html = `
+                    <div class="form-group">
+                        <label for="mastercard_number">Mastercard Number</label>
+                        <input type="text" class="form-control" name="mastercard_number" id="mastercard_number"
+                            placeholder="Enter 16-digit Mastercard number"
+                            pattern="^5[1-5][0-9]{14}$"
+                            maxlength="19" required>
+                        <div class="invalid-feedback">Enter a valid Mastercard number.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mastercard_expiry">Expiry Date</label>
+                        <input type="month" class="form-control" name="mastercard_expiry" id="mastercard_expiry" required>
+                        <div class="invalid-feedback">Please select the card expiry date.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mastercard_cvv">CVV</label>
+                        <input type="password" class="form-control" name="mastercard_cvv" id="mastercard_cvv"
+                            maxlength="3" pattern="^[0-9]{3}$"
+                            placeholder="Enter 3-digit CVV" required>
+                        <div class="invalid-feedback">Enter a valid 3-digit CVV.</div>
+                    </div>`;
+                break;
+            case 'paypal':
+                html = `
+                    <div class="form-group">
+                        <label for="paypal_email">PayPal Email</label>
+                        <input type="email" class="form-control" name="paypal_email" id="paypal_email"
+                            placeholder="example@domain.com" required>
+                        <div class="invalid-feedback">Enter a valid PayPal email address.</div>
+                    </div>`;
+                break;
+            default:
+                html = ''; // cash or nothing
+                break;
+        }
+        extraFieldsDiv.html(html);
+    });
+
+    // Bootstrap validation
+    form.on('submit', function (e) {
+        if (!this.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        $(this).addClass('was-validated');
+    });
+
     });
 
     async function editOrderItem(id, orderItemUrl, updateOrderItemUrl) {

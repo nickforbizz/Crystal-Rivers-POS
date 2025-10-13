@@ -13,7 +13,9 @@ class OrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return (Auth::user()->can('create order') || Auth::user()->can('edit order'));
+        // return (Auth::user()->can('create order') || Auth::user()->can('edit order'));
+        #temporary untill i understand the roles and permissions.
+        return true;
     }
 
 
@@ -30,8 +32,8 @@ class OrderRequest extends FormRequest
         $this->merge([
             'fk_user' => Auth::id(),
             'order_ID' => $order_number,
-            'amount' => 0,
-            'status' => 'Initiated'
+            'status' => 'Initiated',
+            #for debugging purposes
         ]);
     }
 
@@ -52,7 +54,7 @@ class OrderRequest extends FormRequest
             'order_ID' => 'required',
             'order_date' => 'required',
             'status' => 'required',
-            'amount' => 'nullable',
+            'amount' => 'required|numeric',
             'active' => 'nullable',
         ];
     }

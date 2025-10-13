@@ -20,6 +20,7 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index(Request $request)
     {
         $data = Cache::remember('order_all', 60, function () {
@@ -101,11 +102,14 @@ class OrderController extends Controller
     public function create()
     {
         $customers = Cache::remember('customer_all', 200, function () {
-            return Customer::where('active',1)->get();
+            #corrected from active = 1 to active = 'yes'
+            return Customer::where('active','yes')->get();
         });
-
-       
-        return view('cms.orders.create', compact('customers', 'order'));
+        $products = Product::all();
+        #this is to catchh the error of null in the view
+        $order = collect(['id'=>1, 'fk_customer'=>null, 'order_number'=>Str::upper(Str::random(10)), 'order_date'=>now(), 'amount'=>0, 'status'=>'pending', 'active'=>'1','total_amount'=>100]);
+        // dd( $order);
+        return view('cms.orders.create', compact('customers', 'order','products'));
     }
 
     /**
@@ -113,7 +117,7 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-
+        // dd($request->all());
         $order = Order::create($request->validated());
         if($order->save()){
             return redirect()->route('orders.show', ['order' => $order->id])->with('success', 'Order successfully initialized');
